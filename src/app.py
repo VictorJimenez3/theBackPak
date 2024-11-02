@@ -15,8 +15,16 @@ app.config.update( #sets encryption key for session-cookies
 )
 
 @app.route("/")
-def homepage():
-    return "Testing :)))"
+def homepage(): #TODO check redirect usage
+    return redirect("/goodPosture")
+
+@app.route("/goodPosture")
+def goodPosture():
+    return render_template("goodPosture.html")
+
+@app.route("/badPosture")
+def badPosture():
+    return render_template("badPosture.html")
 
 @app.route("/api/getPosture/", methods=["GET"])
 def manipulateGyroscope():
