@@ -4,27 +4,38 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
+    background-color: #f5f5f5; /* White background for the whole page */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.5s ease;
+    justify-content: center; /* Center the container horizontally */
+    align-items: center; /* Center the container vertically */
 }
 
 #postureContainer {
+    width: 100%; /* Full width */
+    height: 420px; /* Adjust this value to control the height */
     padding: 20px;
     border-radius: 10px;
-    color: white;
+    color: white; /* Text color */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */  
 }
 
 .green {
-    background-color: green;
+    background-color: green; /* Background color for good posture */
 }
 
 .red {
-    background-color: red;
+    background-color: red; /* Background color for bad posture */
 }
 
-.yellow {
-    background-color: yellow;
-    color: black; /* Change text color for better contrast */
+h1, p {
+    margin: 0; /* Remove default margins */
+}
+
+#postureMessage {
+    display: inline-block; /* Inline-block to allow background color */
+    padding: 10px; /* Padding for the message */
+    border-radius: 5px; /* Rounded corners for the message box */
 }

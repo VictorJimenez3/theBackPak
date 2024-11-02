@@ -1,28 +1,24 @@
 function updatePostureStatus(posture) {
     const postureMessage = document.getElementById('postureMessage');
     const postureContainer = document.getElementById('postureContainer');
-    
+
     switch(posture) {
         case 'good':
             postureMessage.textContent = "Good Posture!";
-            document.body.className = 'green';
+            postureContainer.className = 'green';
             break;
         case 'bad':
             postureMessage.textContent = "Bad Posture! Please adjust your position.";
-            document.body.className = 'red';
-            break;
-        case 'okay':
-            postureMessage.textContent = "Okay Posture.";
-            document.body.className = 'yellow';
+            postureContainer.className = 'red';
             break;
         default:
             postureMessage.textContent = "Monitoring your posture...";
-            document.body.className = ''; 
+            postureContainer.className = ''; 
     }
 }
-
+    
 setInterval(() => {
-    const postures = ['good', 'bad', 'okay'];
+    const postures = ['good', 'bad'];
     const randomPosture = postures[Math.floor(Math.random() * postures.length)];
     updatePostureStatus(randomPosture);
 }, 3000);
