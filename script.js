@@ -16,9 +16,14 @@ function updatePostureStatus(posture) {
             postureContainer.className = ''; 
     }
 }
+
+document.getElementById('startButton').addEventListener('click', () => {
+    document.getElementById('startContainer').style.display = 'none';
+    document.getElementById('postureContainer').style.display = 'flex';
     
-setInterval(() => {
-    const postures = ['good', 'bad'];
-    const randomPosture = postures[Math.floor(Math.random() * postures.length)];
-    updatePostureStatus(randomPosture);
-}, 3000);
+    setInterval(() => {
+        const postures = ['good', 'bad'];
+        const randomPosture = postures[Math.floor(Math.random() * postures.length)];
+        updatePostureStatus(randomPosture);
+    }, 3000);
+});
