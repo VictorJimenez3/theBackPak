@@ -1,13 +1,6 @@
 #native
 from pprint import pprint
-from time import sleep
 import math
-
-#packages
-import board
-import busio
-import adafruit_bno055
-
 
 def quaternion2Euler(w, x, y, z):
     """
@@ -41,22 +34,9 @@ def quaternion2Euler(w, x, y, z):
 
     return [x*(180/math.pi) for x in (roll, pitch, yaw)]
 
-# Initialize I2C bus
-i2c = busio.I2C(board.SCL, board.SDA)
-
-# Initialize the first BNO055 sensor at address 0x28
-sensor1 = adafruit_bno055.BNO055_I2C(i2c, address=0x28)
-
-# Initialize the second BNO055 sensor at address 0x29
-#sensor2 = adafruit_bno055.BNO055_I2C(i2c, address=0x29)
-
-# Example of reading data from both sensors
-print("Reading data from Sensor 1")
-
-while True:
-    pprint(quaternion2Euler(*sensor1.quaternion))
-    sleep(.25)
-
-print("\nReading data from Sensor 2")
-
-#print("Gyroscope:", sensor2.quanternion)
+def readData(sensor1, sensor2):
+    payload = {"s1" : [], "s2" : []}
+    payload["s1"] = quaternion2Euler(*sensor1.quaternion)
+    # payload["s2"] = quaternion2Euler(*sensor2.quaternion)
+    
+    return None if not any(payload.values()) else payload
