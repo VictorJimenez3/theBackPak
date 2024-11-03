@@ -3,11 +3,12 @@ let timerId; // Declare a variable for the timer interval
 let seconds = 0; // Timer seconds
 let timerStarted = false; // Flag to check if the timer has started
 
+// Move this function to the top
 function updatePostureStatus(posture) {
     const postureMessage = document.getElementById('postureMessage');
     const postureContainer = document.getElementById('postureContainer');
     const stopContainer = document.getElementById('stopContainer');
-    const timer = document.getElementById('timer');
+    // const timer = document.getElementById('timer');
 
     switch (posture) {
         case 'good':
@@ -15,24 +16,25 @@ function updatePostureStatus(posture) {
             postureContainer.className = 'green';
             postureMessage.style.color = 'white';
             stopContainer.style.display = 'block'; // Show stop button
-            timer.style.display = 'block'; // Show timer when posture is good
+            // timer.style.display = 'block'; // Show timer when posture is good
             break;
         case 'bad':
             postureMessage.textContent = "Bad Posture! Please adjust your position.";
             postureContainer.className = 'red';
             postureMessage.style.color = 'white';
             stopContainer.style.display = 'block'; // Show stop button
-            timer.style.display = 'block'; // Show timer when posture is bad
+            // timer.style.display = 'block'; // Show timer when posture is bad
             break;
         default:
             postureMessage.textContent = "Monitoring your posture...";
             postureContainer.className = ''; 
             postureMessage.style.color = 'black';
             stopContainer.style.display = 'none'; // Hide stop button
-            timer.style.display = 'none'; // Hide timer when monitoring posture
+            // timer.style.display = 'none'; // Hide timer when monitoring posture
     }
 }
 
+// Commented out the timer-related functions
 /*
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -54,51 +56,40 @@ function startTimer() {
 */
 
 document.getElementById('startButton').addEventListener('click', () => {
-    var baseURL = "http://127.0.0.1:5000";
+    const baseURL = "http://127.0.0.1:5000";
     
     document.getElementById('startContainer').style.display = 'none';
     document.getElementById('postureContainer').style.display = 'flex';
     document.getElementById('stopContainer').style.display = 'none'; // Ensure stop button is hidden
-    document.getElementById('timer').style.display = 'none'; // Hide timer initially
+    // document.getElementById('timer').style.display = 'none'; // Hide timer initially
 
-    // Start timer when posture monitoring starts
-
-    //startTimer();
-    
     // Simulate posture monitoring
     intervalId = setInterval(() => {
-        fetch(baseURL + "/api/getPosture").then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json(); // or response.text(), response.blob(), etc. depending on the response type
-            }).then(data => {
-                if(data["status"] != 200) {
-                        console.log("Request unsuccessful, no 200");
-                } else {
-                    //at this point we assume binary output from ML model backend
-                    updatePostureStatus(data["isGoodPosture"] == "TRUE" ? "good" : "bad");
-                    console.log(data);
+        fetch(baseURL + "/api/getPosture")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                
-            }).catch(error => {
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data received:", data); // Log the data for debugging
+                if (data["status"] !== 200) {
+                    console.log("Request unsuccessful, status not 200");
+                } else {
+                    updatePostureStatus(data["isGoodPosture"] === "TRUE" ? "good" : "bad");
+                }
+            })
+            .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
-            
-    }, 0.5 * 1000); // Change posture every 0.5 seconds
+    }, 500); // Change posture every 0.5 seconds
 });
 
 document.getElementById('stopButton').addEventListener('click', () => {
-    /*
     clearInterval(intervalId); // Stop posture monitoring
-    clearInterval(timerId); // Stop the timer
-    seconds = 0; // Reset seconds
-    timerStarted = false; // Reset timer flag
-    */
-    
     document.getElementById('postureContainer').style.display = 'none'; // Hide posture monitoring message
     document.getElementById('startContainer').style.display = 'flex'; // Show start button again
     document.getElementById('stopContainer').style.display = 'none'; // Hide stop button
-    document.getElementById('timer').style.display = 'none'; // Hide timer
-    
+    // document.getElementById('timer').style.display = 'none'; // Hide timer
 });
