@@ -60,13 +60,16 @@ app.config.update( #sets encryption key for session-cookies
 #ROUTES
 @app.route("/")
 def homepage():
-    #return render_template("index.html", posture_values=postureValues)
-    return jsonify(postureValues) if postureValues else jsonify({})
-
-    # return f"<p>{json.dumps(postureValues) if postureValues else ''}<p>"
-    # return render_template("index.html")
-
-
+    #return jsonify(postureValues) if postureValues else jsonify({})
+    return render_template("index.html")
+    
+@app.route("/api/getPosture", methods=["GET"])
+def getPostureRequest():
+    return jsonify({
+        "isGoodPosture" : "ERROR" if not all(postureValues.values()) else ("TRUE" if getPosture(postureValues) else "FALSE"),
+        "status" : 400 if not all(postureValues.values()) else 200
+    })
+    
 if __name__ == "__main__":
     try:
         measureGyroThread = threading.Thread(target=readPostureValuesInBackground, daemon=True)
