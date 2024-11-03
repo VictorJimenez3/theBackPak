@@ -81,22 +81,4 @@ def startGryoMeasure():
   
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port = 10998)
-    
-    """
-    [Unit]
-Description=Runs LH on start
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/python3 ~/hackNJIT/theBackPak/src/app.py
-WorkingDirectory=~/hackNJIT/theBackPak/src
-StandardOutput=inherit
-StandardInput=inherit
-Restart=always
-User=matthew
-
-[Install]
-WantedB=multi-user.target
-
-    """
 
