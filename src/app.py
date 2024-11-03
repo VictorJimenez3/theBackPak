@@ -69,11 +69,16 @@ def manipulateGyroscope():
 
     return jsonify({
         #"isGoodPosture" : "ERROR" if not all(postureValues.values()) else getPosture(postureValues),
-        "isGoodPosture" : "ERROR" if not all(postureValues.values()) else "TRUE",
+        #"isGoodPosture" : "ERROR" if not all(postureValues.values()) else "TRUE", #assumes gyro works
+        "isGoodPosture" : "TRUE",
         "status" : 400 if not all(postureValues.values()) else 200
     })
 
 if __name__ == "__main__":
-    measureGyroThread = threading.Thread(target=readPostureValuesInBackground, daemon=True)
-    measureGyroThread.start()
+    try:
+        raise Exception()
+        measureGyroThread = threading.Thread(target=readPostureValuesInBackground, daemon=True)
+        measureGyroThread.start()
+    except:
+        print("balls")
     app.run()
