@@ -59,13 +59,9 @@ app.config.update( #sets encryption key for session-cookies
 
 #ROUTES
 @app.route("/")
-def homepage(): #TODO check redirect usage
-    return redirect("/posture")
-
-@app.route("/posture", methods=["GET"])
-def posture():
+def homepage():
     #return f"<p>{json.dumps(postureValues) if postureValues else ''}<p>"
-    return render_template("posture.html")
+    return render_template("index.html")
 
 @app.route("/api/getPosture", methods=["GET"])
 def manipulateGyroscope():
