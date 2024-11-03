@@ -1,5 +1,6 @@
 #packages
-from flask import Flask, render_template, request, session, redirect, url_for, jsonify, CORS
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from flask_cors import CORS
 import board
 import busio
 import adafruit_bno055
@@ -23,7 +24,8 @@ def readPostureValuesInBackground():
     # Initialize I2C bus
     i2c = busio.I2C(board.SCL, board.SDA)
 
-    GPIO.setmode(GPIO.BCM); GPIO.setup(21, GPIO.OUT)
+    GPIO.setmode(GPIO.BCM);
+    GPIO.setup(17, GPIO.OUT)
     GPIO.output(17, GPIO.HIGH)
 
     #TODO set GPIO for addr switch on sensor2 to HIGH
@@ -35,6 +37,7 @@ def readPostureValuesInBackground():
     while True:
         postureValues = readData(sensor1, sensor2)
         if not postureValues:
+            print("FUCKKKKKK")
             continue #don't wait with nullish values, execute immediately 
         sleep(.1)
 
@@ -45,25 +48,20 @@ CORS(app)
 
 app.config.update( #sets encryption key for session-cookies
     TESTING=True,
-    SECRET_KEY=os.environ["FLASK_KEY"]
+    #TODO TAKE OUTTT
+    SECRET_KEY="623825bd15cbe8a793acc55c50543f450450a1b0ec556ae9673d50d0b1d71619"
 )
 
 #ROUTES
 @app.route("/")
 def homepage(): #TODO check redirect usage
-    return redirect("/goodPosture")
+    return redirect("/posture")
 
 @app.route("/posture", methods=["GET"])
 def posture():
-    return render_template("posture.html")
+    return f"<p>{json.dumps(postureValues) if postureValues else ''}<p>"
+    #return render_template("posture.html")
 
-# @app.route("/goodPosture")
-# def goodPosture():
-#     return render_template("goodPosture.html")
-
-# @app.route("/badPosture")
-# def badPosture():
-#     return render_template("badPosture.html")
 
 @app.route("/api/getPosture/", methods=["GET"])
 def manipulateGyroscope():

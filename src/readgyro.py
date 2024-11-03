@@ -36,7 +36,12 @@ def quaternion2Euler(w, x, y, z):
 
 def readData(sensor1, sensor2):
     payload = {"s1" : [], "s2" : []}
-    payload["s1"] = quaternion2Euler(*sensor1.quaternion)
-    # payload["s2"] = quaternion2Euler(*sensor2.quaternion)
     
+    try:
+        payload["s1"] = quaternion2Euler(*sensor1.quaternion)
+        payload["s2"] = quaternion2Euler(*sensor2.quaternion)
+    except Exception as e:
+        print(f"Err: {e}")
+    
+    #keep reading till amended on addressing
     return None if not any(payload.values()) else payload
