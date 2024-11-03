@@ -2,8 +2,8 @@ let intervalId; // Declare a variable to hold the interval ID
 let seconds = 0; // Timer seconds
 let timerStarted = false; // Flag to check if the timer has started
 
-const alertSound = new Audio("{{ url_for('static', filename='sounds/sound.mp3') }}"); // Replace with the path to your sound file
-alertSound.preload = "auto"; // Preload the sound for faster playback
+const alertSound = document.getElementById('alertSound');
+
 
 // Move this function to the top
 function updatePostureStatus(posture) {
@@ -19,11 +19,14 @@ function updatePostureStatus(posture) {
             stopContainer.style.display = 'block'; // Show stop button
             break;
         case 'bad':
-            alertSound.play();
             postureMessage.textContent = "Bad Posture! Please adjust your position.";
             postureContainer.className = 'red';
             postureMessage.style.color = 'white';
             stopContainer.style.display = 'block'; // Show stop button
+            alertSound.currentTime = 0; // Reset sound to start
+            alertSound.play().catch(error => {
+                console.error("Audio playback failed:", error);
+            });
             break;
             
             
