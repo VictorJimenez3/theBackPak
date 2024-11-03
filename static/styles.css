@@ -1,0 +1,106 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Clean font */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #121212; /* Darker background for better contrast */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#startContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#startButton {
+    width: 80vw; /* Responsive width */
+    max-width: 300px; /* Maximum width */
+    height: 80vw; /* Responsive height */
+    max-height: 300px; /* Maximum height */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff; /* Blue background */
+    cursor: pointer;
+    font-size: 5vw; /* Responsive font size */
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding shadow */
+}
+
+#startButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+#postureContainer {
+    width: 90vw; /* Responsive width */
+    max-width: 600px; /* Maximum width */
+    height: 420px; /* Fixed height */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adding shadow */
+}
+
+.green {
+    background-color: #28a745; /* Green for good posture */
+}
+
+.red {
+    background-color: #dc3545; /* Red for bad posture */
+}
+
+#stopContainer {
+    width: 100%; /* Fill the width */
+}
+
+#stopButton {
+    width: 100%; /* Fill the width of the container */
+    height: 60px; /* Desired height */
+    background-color: #ff4d4d; /* Red background for stop button */
+    color: white; /* Text color */
+    font-size: 24px; /* Font size for text */
+    font-weight: bold; /* Make text bold */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center; /* Center the text */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding shadow */
+}
+
+#stopButton:hover {
+    background-color: #d13f3f; /* Darker shade on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+#timer {
+    font-size: 36px; /* Increase font size for timer */
+    margin-top: 20px;
+    font-weight: 500; /* Slightly bolder font weight */
+    color: orange; /* Orange color for timer */
+}
+
+h1 {
+    font-size: 30px; /* Set h1 font size */
+    color: white; /* White text color for headings */
+    margin-bottom: 10px; /* Spacing below heading */
+}
+
+p {
+    font-size: 18px; /* Set paragraph font size */
+    color: #ccc; /* Lighter text color for paragraphs */
+}
+x
