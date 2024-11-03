@@ -60,7 +60,6 @@ app.config.update( #sets encryption key for session-cookies
 #ROUTES
 @app.route("/")
 def homepage():
-    #return jsonify(postureValues) if postureValues else jsonify({})
     return render_template("index.html")
     
 @app.route("/api/getPosture", methods=["GET"])
@@ -81,4 +80,23 @@ def startGryoMeasure():
         return jsonify({"message" : "success"})
   
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port = 10998)
+    
+    """
+    [Unit]
+Description=Runs LH on start
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 ~/hackNJIT/theBackPak/src/app.py
+WorkingDirectory=~/hackNJIT/theBackPak/src
+StandardOutput=inherit
+StandardInput=inherit
+Restart=always
+User=matthew
+
+[Install]
+WantedB=multi-user.target
+
+    """
+

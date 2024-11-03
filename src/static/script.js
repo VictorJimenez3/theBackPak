@@ -30,7 +30,7 @@ function updatePostureStatus(posture) {
 }
 
 document.getElementById('startButton').addEventListener('click', () => {
-    const baseURL = "http://127.0.0.1:5000";
+    const baseURL = "10.196.128.27:10998";
     
     document.getElementById('startContainer').style.display = 'none';
     document.getElementById('postureContainer').style.display = 'flex';
