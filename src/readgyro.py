@@ -13,9 +13,6 @@ def quaternion2Euler(w, x, y, z):
     A tuple (roll, pitch, yaw) in degrees
     """
     
-    if not any((w, x, y, z)):
-        return None
-    
     # Roll (x-axis rotation)
     t0 = +2.0 * (w * x + y * z)
     t1 = +1.0 - 2.0 * (x * x + y * y)

@@ -60,23 +60,15 @@ app.config.update( #sets encryption key for session-cookies
 #ROUTES
 @app.route("/")
 def homepage():
-    #return f"<p>{json.dumps(postureValues) if postureValues else ''}<p>"
-    return render_template("index.html")
+    #return render_template("index.html", posture_values=postureValues)
+    return jsonify(postureValues) if postureValues else jsonify({})
 
-@app.route("/api/getPosture", methods=["GET"])
-def manipulateGyroscope():
-    pprint(f"Received request: {json.loads(request.json)}") #TODO delete for deployment
+    # return f"<p>{json.dumps(postureValues) if postureValues else ''}<p>"
+    # return render_template("index.html")
 
-    return jsonify({
-        #"isGoodPosture" : "ERROR" if not all(postureValues.values()) else getPosture(postureValues),
-        #"isGoodPosture" : "ERROR" if not all(postureValues.values()) else "TRUE", #assumes gyro works
-        "isGoodPosture" : "TRUE",
-        "status" : 400 if not all(postureValues.values()) else 200
-    })
 
 if __name__ == "__main__":
     try:
-        raise Exception()
         measureGyroThread = threading.Thread(target=readPostureValuesInBackground, daemon=True)
         measureGyroThread.start()
     except:
