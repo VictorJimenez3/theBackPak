@@ -10,6 +10,8 @@ import RPi.GPIO as GPIO
 import json, os, threading, socket
 from pprint import pprint
 from time import sleep
+from datetime import datetime
+import hashlib
 
 #files
 from readgyro import readData
@@ -37,7 +39,6 @@ def readPostureValuesInBackground():
     while True:
         postureValues = readData(sensor1, sensor2)
         if not postureValues:
-            print("FUCKKKKKK")
             continue #don't wait with nullish values, execute immediately 
         sleep(.1)
 
@@ -45,11 +46,15 @@ def readPostureValuesInBackground():
 app = Flask(__name__)
 
 CORS(app)
+#TODO hash secret key
+#m = hashlib.sha256()
+#hashed = m.update(datetime.now().strftime("%Y-%m-%d %H:%M:%S")).digest()
+#hashed = hashed.hexdigest()
 
+hashed="testing for now"
 app.config.update( #sets encryption key for session-cookies
     TESTING=True,
-    #TODO TAKE OUTTT
-    SECRET_KEY="623825bd15cbe8a793acc55c50543f450450a1b0ec556ae9673d50d0b1d71619"
+    SECRET_KEY=hashed
 )
 
 #ROUTES
@@ -59,17 +64,18 @@ def homepage(): #TODO check redirect usage
 
 @app.route("/posture", methods=["GET"])
 def posture():
-    return f"<p>{json.dumps(postureValues) if postureValues else ''}<p>"
-    #return render_template("posture.html")
+    #return f"<p>{json.dumps(postureValues) if postureValues else ''}<p>"
+    return render_template("posture.html")
 
-
-@app.route("/api/getPosture/", methods=["GET"])
+@app.route("/api/getPosture", methods=["GET"])
 def manipulateGyroscope():
     pprint(f"Received request: {json.loads(request.json)}") #TODO delete for deployment
 
     return jsonify({
-        "isGoodPosture" : "ERROR" if not any(postureValues.values()) else getPosture(postureValues)
-    }), 200
+        #"isGoodPosture" : "ERROR" if not all(postureValues.values()) else getPosture(postureValues),
+        "isGoodPosture" : "ERROR" if not all(postureValues.values()) else "TRUE",
+        "status" : 400 if not all(postureValues.values()) else 200
+    })
 
 if __name__ == "__main__":
     measureGyroThread = threading.Thread(target=readPostureValuesInBackground, daemon=True)
