@@ -26,20 +26,20 @@ with open("loggedData.txt", "a") as f:
 	sensor1 = adafruit_bno055.BNO055_I2C(i2c, address=0x28)
 	sensor2 = adafruit_bno055.BNO055_I2C(i2c, address=0x29) #with pinHIGH on addr
 	
-	payload = {}
+	payload = []
 	while True:
 		postureValues = readData(sensor1, sensor2)
 		if not postureValues or not all(postureValues.values()):
 			continue
-		
-		print(list(zip(["x","y","z"],postureValues["s1"])))
+		"""
+		s1x, s1y, s1z, s2x, s2y, s2z, label
+		"""
+		payload.extend([str(x) for x in postureValues["s1"]])
+		payload.extend([str(x) for x in postureValues["s2"]])
 		pprint(postureValues)
-		payload["s1"] = {key:num for (key, num) in (zip(["x","y","z"],postureValues["s1"]))}
-		payload["s2"] = {key:num for (key, num) in (zip(["x","y","z"],postureValues["s2"]))}
-		payload["label"] = label
 		
-		f.write(json.dumps(payload) + ",\n")
-		
+		f.write(",".join(payload) + f", {label}" + "\n")
+		payload = []
 		if not postureValues:
 		    continue #don't wait with nullish values, execute immediately 
 		    
