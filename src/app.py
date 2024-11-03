@@ -66,14 +66,19 @@ def homepage():
 @app.route("/api/getPosture", methods=["GET"])
 def getPostureRequest():
     return jsonify({
-        "isGoodPosture" : "ERROR" if not all(postureValues.values()) else ("TRUE" if getPosture(postureValues) else "FALSE"),
-        "status" : 400 if not all(postureValues.values()) else 200
+        "isGoodPosture" : "ERROR" if not postureValues or not all(postureValues) else ("TRUE" if getPosture(postureValues) else "FALSE"),
+        "status" : 400 if not postureValues or not all(postureValues) else 200
     })
     
+@app.route("/api/startMeasure", methods=["GET"])
+def startGryoMeasure():
+    if __name__ == "__main__":
+        try:
+            measureGyroThread = threading.Thread(target=readPostureValuesInBackground, daemon=True)
+            measureGyroThread.start()
+        except Exception as e:
+            print(f"error in largest thread scope, {e}")
+        return jsonify({"message" : "success"})
+  
 if __name__ == "__main__":
-    try:
-        measureGyroThread = threading.Thread(target=readPostureValuesInBackground, daemon=True)
-        measureGyroThread.start()
-    except:
-        print("balls")
     app.run()

@@ -65,3 +65,15 @@ document.getElementById('stopButton').addEventListener('click', () => {
     document.getElementById('startContainer').style.display = 'flex'; // Show start button again
     document.getElementById('stopContainer').style.display = 'none'; // Hide stop button
 });
+
+document.getElementById("startButton").addEventListener("click", function() {
+    fetch('/api/startMeasure')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
