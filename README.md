@@ -37,5 +37,5 @@ TheBackPak is a custom hardware-software integrated solution. Basic setup involv
 *For demonstration purposes only. Commercial versions may include expanded instructions and features.*
 
 ## Links
-- [GitHub Repository](https://github.com/Binimal101/theBackPak)
+- [GitHub Repository](https://github.com/VictorJimenez3/theBackPak)
 - [Devpost Project Page](https://devpost.com/software/thebackpak)
